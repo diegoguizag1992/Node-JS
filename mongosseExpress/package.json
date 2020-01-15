@@ -1,0 +1,17 @@
+{
+  "name": "mongosseexpress",
+  "version": "1.0.0",
+  "description": "Proyecto mongosse y express juntos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Fernando Güiza Galeano",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validation": "^1.0.3",
+    "express-validator": "^6.3.1",
+    "mongoose": "^5.8.6"
+  }
+}
