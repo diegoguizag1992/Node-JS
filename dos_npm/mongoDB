@@ -1,0 +1,492 @@
+-->  MONGOOSE
+
+    Es un framework de JavaScript, que se usa comunmente en aplicaciones NodeJs con base de datos MongoDB.
+    Mongoose proporciona una solución directa basada en esquemas para modelar los datos de su aplicación. Incluye conversión de tipo incorporada, validación, 
+    creación de consultas, ganchos de lógica de negocios y más, listos para usar.
+
+-->  MongoDB Compass
+
+    Compass será a MongoDB como Toad a SQL.
+    
+
+-->  MongoDB
+
+    Base de datos relacionales:  Las base de datos relaciones se caracterizan por estar formadas por tablas en las que 
+    almacenan diferentes tipos de datos, que contienen las filas y columnas y ademas pueden tener relaciones entre ellas.
+
+    Base de datos no relacionales: Almacena la informacion de forma diferente, por medio de document database, los datos son almacenados 
+    en diferentes documentos y cada uno de los documentos es independiente de los demas, es decir que mondoDB es una base de datos no sql, eorientado a documentos 
+    de codigo abierto, en lugar de guardar los datos en tablas MongoDB guarda en formatos BSON, es considerada en una de las bases de datos lidered, hoy 
+    en dia el formato JSON es utilizado por casi todos los desarrolladores el elmacenamiento y la consulta de los mismos, como son documentos independientes en mas 
+    facil eliminar y editar.
+
+--> Instalacion MongoDB
+
+    1 -  Abrir Terminal 
+    2 -  Instalar Homebrew
+         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    3 - Si ya esta instalado lo actualizamos
+    4 - Instalar MongoDB 
+        brew install mongodb-community@4.0
+    5 - Creamos directorio "db"
+        mkdir -p data/db
+    6 - Le damos los pemisos correctos para poder usar mongo a nuestro archivo db.
+        sudo chown -R Diego /data/db
+    7 - Ejecutar Mongo daemon para iniciar el servidor
+        sudo mongod                  -->  port 27017
+    8 - Ejecutar cliente mongo shell para iniciar la abase de datos, para esto debemos abrir otra terminal y ejecutamos 
+        mongo
+    9 - Para salir de la base de datos, primero debemos finalizar la base de datos, luego el servidor.
+        exit.
+    10 - para salir del servidor 
+         presionamos ctrl c
+
+--> Instalacion de mongoDB en windows
+    1 - Vamos a la pagina web de NodeJS se descarga el instalador desde la pagina principal
+    2 - Creamo el directorio
+        cd  C
+        md "/data/db"
+    3 -  
+
+    Para el correcto funcionamiento de MongoDB siempre debe estar activo
+
+    -->  Comandos base de datos
+
+    db.help()                    ayuda sobre métodos db
+	db.mycoll.help()             ayuda sobre métodos de recolección
+    db.version()                 muestra la version de mongoDB
+	sh.help()                    ayudantes de fragmentación
+	rs.help()                    ayudantes de réplica
+	help admin                   ayuda administrativa
+	help connect                 conectarse a una ayuda de db
+	help keys                    atajos de teclado
+	help misc                    cosas diversas que debes saber
+	help mr                      Mapa reducido
+    show dbs                     Muestra una lista en los nombres de la base de datos
+    show collections             mostrar colecciones en la base de datos actual
+	show users                   mostrar usuarios en la base de datos actual
+	show profile                 muestra las entradas más recientes de system.profile con tiempo> = 1 ms
+    show logs                    mostrar los nombres de los registradores accesibles
+	show log [name]              imprime el último segmento de la memoria de inicio de sesión, 'global' es el predeterminado
+	use <db_name>                establecer la base de datos actual
+	db.foo.find()                listar objetos en la colección foo
+	db.foo.find( { a : 1 } )     listar objetos en foo donde a == 1
+	it                           resultado de la última línea evaluada; utilizar para iterar más
+	DBQuery.shellBatchSize = x   establecer el número predeterminado de elementos para mostrar en el shell
+	exit                         salir de la concha de mongo
+
+    
+    -->  Comandos Administracion base de datos
+
+    cls                                                         Sirve para limpiar la consola de la base de datos
+    db                                                          Muestra que base de datos estamos utilizando
+    show dbs                                                    Muestra una lista en los nombres de la base de datos
+    use <db_name>                                               Establecer la base de datos actual, selecciona la ase a trabajar, crea la base de datos,
+                                                                pero se debe crear un documento
+    db.createCollection("nombre")                               Crea colecciones y deja ver la base de datos
+    show collections                                            Mostrar colecciones en la base de datos actual
+    objectId                                                    Es un numero unico para cada documento
+    db.<name_collections>.drop()                                Elimina la coleccion solicitada
+    db.getCollection("name_collections_elegida").drop()         Elimina la colleccion que se necesite
+    db.dropDatabase()                                           Se debe seleccionar la base de datos y luego utilizar este comando. para eliminar la base de datos
+    db.profesor.insert(                                         Nos permite insertar informacion en un documento
+        {
+            "nombre": "Alberto",
+            "cursos": 4,
+            "pais": "null",
+            "lenguajes": ["Jva", "Kotlin", "Swift"],
+            "direccion": {
+                "calle": "Mi calle",
+                "numero": 3 
+                }
+        }
+    )
+    db.curso.insertMany(                                        Crea mas colecciones.                
+        [{
+            "nombre": "Curso MongoDB",
+            "duracion": 3000,
+            "estudiantes": 1000,
+            "fecha de lanzamiento": "2020"
+        },
+        {
+            "nombre": "Curso NodeJS",
+            "duracion": 200,
+            "estudiantes": 500,
+            "fecha de lanzamiento": "2021"
+        },
+        {
+            "nombre": "Curso Kotlin",
+            "duracion": 200,
+            "estudiantes": 300,
+            "fecha de lanzamiento": null
+        }]
+    )
+    
+    -->  CRUD  base de datos.
+
+CRUD documentos
+
+Cread
+
+        use <db_name>                                               Establecer la base de datos actual, selecciona la ase a trabajar, crea la base de datos,
+                                                                    pero se debe crear un documento
+        db.createCollection("nombre")                               Crea colecciones y deja ver la base de datos
+        db.profesor.insert([{}, {}. {}])                            Nos permite insertar informacion de varios documentos
+        db.profesor.insertOne(Object)                               inserta un objeto en la coleccion solicitada, debe estar en el formato onjeto
+        db.profesor.insertOne(Array de Objetos)                     Inserta un array en la coleccion solicitada, debe estra en el format array
+
+    Ejemplo: 
+        db.profesor.insertOne(                                      Nos permite insertar informacion en un documento, tipo Object
+          {
+            "Double": 10,
+            "String": "Alberto",
+            "Boolean": true,
+            "Date": new Date(),
+            "Null": null,
+            "NumberInt": NumberInt(100),
+            "NumberLong": NumberLong(123456789),
+            "Object": {
+                "Double": 12,
+                "String": "Alberto" 
+                },
+            "array": [1,2,3]
+         }
+    )
+            "InsertedId": ObjectId("5dtet5d56d6te6f")              El object Id es el algoritmo de creacion, se genera cuando se crea un registro correctamente
+
+    
+    $set = El operador set rempleza los valores de un campo de un documento por el valor especifico que se le pasa.
+
+      Ejemplo: En este ejemplo se quiere agregar un nuevo campo al documento, como por ejemplo el segundo nombre.
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$set: {"name.second": "Fernando"}})
+          
+      Ejemplo: Se requiere agregar un nuevo campo a un respectivo documento
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$set: {"salary": 999}})
+
+    --> Operador $push  con  $each
+            $each  = Sirve para ingresarmas mas de un valor a un array
+            db.persona.updateOne({"_id": "5d501506d49a13e3cd8c25c2"}, {$push: {"moneda": {$each: ["pesos", "dolar", "euros"] }}})
+ 
+
+
+read
+
+        db.<name_collection>.find({"parametro del objeto"})         Muestra la informacion de todos los documentos de la coleccion. Funciona como un filtro.
+        Ejemplo:                                                    Nos trae toda la infrmacion de la persona {todo el objeto, mas el parametro filtrado}
+            dbd.persona.find({"favoriteFruit": "banana"})
+            {"favoriteFruit": "banana"}                             Asi seria en mongoDB Compass
+
+        dbd.persona.find({"favoriteFruit": "banana"}).count()       Nos muestra el total de personas que les gusta la banana  = 38
+
+    -->  Query
+    son consultas a las base de datos nos sirve para extraer los datos que necesitamos.
+
+    -->  Importar documentos Json a nuestra base de datos
+    Con este codigo podemos importar documentos json desde nuestra terminal, esta compuesto por el codigo mongoimport / tipo de archivo a importar (--jsonArray) /
+    nombre de la base de datos (--db banco) / nombre coleccion (--collection persona) / ruta del archivo en el PC (--file /Users/Diego/Downloads/queries.json)
+    Se debe ingresar el codigo sin ejecutar la base de datos
+
+         mongoimport --jsonArray --db bancoDelete --collection persona --file /Users/Diego/Downloads/queries.json     
+
+        Segunda forma:
+        1.  Se crea la base de datos.
+        2.  Creamos la coleccion.
+        3.  db.persona.insert(pegamos la informacion)
+
+    --> Realizando Query
+    Buscar dos parametros en base de datos.
+        db.persona.find({"favoriteFruit": "banana", "age": 31})
+
+    -->   Opesradores
+            MongoDB nos brinda una serie de operadores que nos permite realizar diferentes consultas en las bases de datos para facilitarnos la administracion.
+            una lista de ellos son los siguientes.
+
+            $eq  =  Igual(Equal)                                        Todos los que son iguales a esto.
+            $ne  =  No igual(No Equal)                                  Todos los que no son iguales a esto.
+            $gt  =  Mas grande quei(Greater Than)                       Mayor que o mas grande que. edad mayor a 31 por ejemplo
+            $gte =  Mas grande que o igual(Less Than)                   Todos los que son mayores a 31 a partir de 31
+            $lt  =  Menos que(Less Than)                                Los usuarios menores de 31 es decir a partir de 30 nos envia la lista de documentos.
+            $lte =  Menos que o igual(Less than or equal)               Menores de 31, 30 hacia atras, lo mismo para las fechas.
+            $in  =  busca condiciones con cualquier de los              Selecciona los documentos donde el valor del array sea igual al parametro especificado.
+                    valores de un array que se ha especificado.         
+            $nin =  Busca que no hay condiciones con ninguno de         Selecciona los documentos donde el valor es distinto al los datos del aray que sea especificado
+                    los valores de un array que se ha especificado. 
+            $and =  Este operador realiza la operacion logica "Y" en un array de expresiones y selecciona los documentos que cumplan todas las expresiones del array.
+            $or  =  Este operador realiza la operacion logica "o", en un array de expresiones y seleccionan los documentos que cumplen al menos una de las expresiones
+                    del array.
+            $set = El operador set rempleza los valores de un campo de un documento por el valor especifico que se le pasa.
+            $unset = El operador unset borra un campo particular de un documento 
+            $push  = Sirve para agregar elementos a un array.
+            $each  = Sirve para ingresarmas mas de un valor a un array
+            updateOne  =   Sirve para realizar actualizacion de un solo campo de un documento, con este nos aseguramos que solo se va actualizar un solo campo y no 
+                           por error se actualicen asi cumpla la Query (busqueda), se actualiza el primer documento que encuentre en la base de datos.   
+            updateMany =   Actualiza todos los documentos que cumplen con la Query.
+            
+                     
+
+    Se utilizan de la siguiente manera:
+    
+        db.persona.find({"age": {"$eq": 27}})                        Muestra todo los documentos iguales a la edad de 27
+        db.persona.find({"age": {"$ne": 27}})                        Muestra todos los documentos con edad diferente a 27
+        db.persona.find({"age": {"$gt": 27}})                        Muestra los documentos con edad mayor a  27
+        db.persona.find({"age": {"$gte": 27}})                       Muestra los documentos con edad igual y mayor a 27  
+        db.persona.find({"age": {"$lt": 27}})                        Muestra los documentos con edad menor a 27
+        db.persona.find({"age": {"$lte": 27}})                       Muestra los documentos menores e iguales a 27 
+
+    Utilizando mas de un operador.
+
+        db.persona.find({"age": {"$gt": 30, "$lt": 35}})            Muestra los documentos entre 30 a 35 age
+
+    Operadores para manejar String
+    Podemos utilizar estos operadores para buscar personas que su nombre empiece por alguna letra en eespecifico, los grupos de personas con letra menores o mayores
+    a una letra en especifico.
+
+    Objeto dentro de Objeto 
+        {
+            "String": "Alberto",
+            "Object": {
+                "Double": 12,
+                "String": "Alberto" 
+                },
+        }
+        db.persona.find({"Object.String": "Alberto"})                           Filtra la informacion Object dentro de un Object
+        db.persona.find({"name.last": {"$gte": "R"}})                           Filtra el Objeto dentro de Object y muestra los apellidos desues, que empiezan con R
+        db.persona.find({"name.last": {"$gte": "R"}}).sort({"name.last": 1})    Muestra la informacion como el ejemplo enterior y ordena de menor a mayor gracias al 1
+        db.persona.find({"name.last": {"$gte": "R"}}).sort({"name.last": -1})   Muestra la informacion como el ejemplo enterior y ordena de mayor a menor gracias al -1
+
+    
+--> Operadores $in  y $nin
+      Ejemplo $in
+        db.persona.find({"name.first": {"$in":["Geneva", "Pamela"]}})           Nos permite consultar mas de un primer nombre, pasando los datos por el array,
+                                                                                Puede tener tantos elementos como necesitemos realizar la busqueda.
+      Ejemplo $nin                                                                          
+        db.persona.find({"name.first": {"$nin":["Geneva", "Pamela"]}})          Nos selecciona los documentos distontos a los campos pasados por el array 
+
+
+--> Operadores $and  y  $or
+       Ejemplo $and:  En este ejemplo queremos traer todos los documentos mayores a 18 años no queremos aquellos que tienen 33 años.
+        db.persona.find({"$and": [{"age": {$ne: 33}}, {"age": {"$gte":18}}]})    
+
+        En el siguiente ejemplo buscaremos color de ojos verges y los documentos con edad mayor a 33 años y lo organizamos por años
+        db.persona.find({"$and": [{"eyeColor": "green"}, {"age": {"$gte": 33}}]}).sort(age:1) 
+
+      Ejemplo $or:  Con el operador $or solo se debe cumplir una condicion.  En este ejemplo buscaremos los que tengan los ojos marrones y que se llamen Genova.
+        db.persona.find({"$or": [{"eyeColor": "brown"}, {"name.first": "Geneva"}]})
+
+--> Query en Objetos hijos
+        En este ejemplo queremos traer la informacion completa de un Objeto hijo.
+        db.persona.find({"$or": [{"eyeColor": "brown"}, {"name.first": "Geneva"}]})
+
+--> Query en Arrays
+        En este ejemplo lo que queremos es buscar un array completo, sebe poner la informacion tal cual esta.
+        db.persona.find({"tags": ["duis", "aliqua", "labore", "aliqua", "duis"]}) 
+
+        En este ejemplo vamos a buscar un elemento del array y que nos devuelva todos los documentos que coincidad. No es necesario ingresar toda la informacion del 
+        array con un solo parametro nos debera traer todos los documentos con esta informacion.
+        db.persona.find({"tags": "duis"})
+
+        En este ejemplo: buscaremos un parametro de un array que este en una posicion especifica.
+        db.persona.find({"tags.1": "esse"})
+
+
+delete
+
+        db.dropDatabase()                                           Se debe seleccionar la base de datos y luego utilizar este comando. para eliminar la base de datos
+        db.<name_collection>.remove({})                             Elimina los datos de toda la coleccion
+        db.getCollection("name_collections_elegida").drop()         Elimina la colleccion que se necesite
+        db.<name_collections>.drop()                                Elimina la coleccion solicitada
+        
+        $unset = El operador unset borra un campo particular de un documento 
+            Ejemplo: En este caso se requiere eliminar un campo de un documento
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$unset: {"salary": 999}})    No es necesario colocar el valor del salario se puede dejar ""
+
+        Nota:  Podemos eliminar un documento deseado, varios documentos o todos los documentos.
+               Tambien podemos eliminar la colleccion o todas las colecciones.
+               Por ultimo podemos eliminar cualquier base de datos o todas las bases de datos.
+
+               Las operaciones de borrado siempre es necesario tener un backup que te pueda respaldar, en el caso de que no tengamos respaldo no se puede recuperar
+               la informacion.
+
+    --> Hacer copia a base de datos.
+            Para hacer copia a una base de datos debemos colocar tres parametros, 
+                1. nombre de la base de datos a respaldar = "banco"
+                2. Nombre a la copia de respaldo = "bancoDelete" 
+                3. Direccion servidor = "127.0.0.1"
+                    db.copyDatabase("banco", "bancoDelete", "127.0.0.1")    
+
+    --> Ejemplo para eliminar un docuemnto
+            db.persona.remove({"_id": "5d50150600338d458ec4e8fb"})
+
+    --> En este ejemplo borra el primer documento que encuentre con ojos azules, para que se cumpla esto se debe ingresar la condicion true
+            db.persona.remove({"eyeColor": "blue"}, true)
+
+        Con este comendo eliminaria todos los que tienen ojos azules
+            db.persona.remove({"eyeColor": "blue"})
+
+        con este borra todos los docuemntos:
+            db.persona.remove({})
+
+    --> Operador deleteOne()
+            Con este operador eliminamos el primer documento que cumpla la QUERY, si hay mas que la cumplen solo eleimina el primero.
+            db.persona.deleteOne({"eyeColor": "green"})
+
+    -->  Operador deleMany()
+            Con este operador podemos eliminar todos los documentos que cumplan con la query.
+            db.persona.deleteMany({"eyeColor": "green"})
+
+        Con deleteMany()  tambien podemos eliminar todos los documentos.
+            db.persona.deleteMany({})
+
+    -->  Operador drop()
+            Nos sirve para eliminar todos los documentos.
+            db.persona.drop()
+
+    --> Operador dropDatabase()
+            Sirve para eliminar toda la base de datos.
+            db.dropDatabase()
+
+
+
+update 
+
+    -->   UPDATE Actualizacion de documentos.
+            Para realizar la actualizacion de informacion se puede realizar seleccionando un documento o varios documentos. acontinucion la secuencio para la 
+            actualizacion
+
+        db.collections.update{
+            // 1. query  = parametro a actualizar
+            {},
+            // 2. update  = parametros a actulizar 
+            {},
+            // 3. options (opcional) = nos permite mas opciones a la hora de actualizar la informacion.
+            {}
+        }
+
+    -->  Operadores de Update: $set  y  $unset
+
+        $set = El operador set rempleza los valores de un campo de un documento por el valor especifico que se le pasa.
+        
+          Ejemplo: Se requiere actualizar el nombre de la persona y el apellido de solo un documento.
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$set: {"name.first": "Diego", "name.last": "Guiza"}})
+
+          Ejemplo: En este ejemplo se quiere agregar un nuevo campo al documento, como por ejemplo el segundo nombre.
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$set: {"name.second": "Fernando"}})
+          
+          Ejemplo: Se requiere agregar un nuevo campo a un respectivo documento
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$set: {"salary": 999}})
+
+          Ejemplo: En este ejemplo se pretende insertar Salary en todos los documentos con update, pero hay que tener encuente que update, encuentra el primer 
+            documento con este campo y lo actualiza el resto no, para insertar en todos los documentos hay que ver otra opcion.
+            db.persona.update({}, {$set: {"salary": 500}})                {}, este parentesis quiere decir que selecciona todos los documentos.
+
+
+        -->  Hacer multiples actualizaciones.
+               Ejemplo: Se quiere insertar a todos los docuemntos el campo salary.
+               db.persona.update({},{$set: {"salary": 1000}}, {multi: true})
+
+
+        $unset = El operador unset borra un campo particular de un documento 
+          Ejemplo: En este caso se requiere eliminar un campo de un documento
+            db.persona.update({"_id": "5d501506d49a13e3cd8c25c2"}, {$unset: {"salary": 999}})    No es necesario colocar el valor del salario se puede dejar ""
+
+        --> Utilizando $set  y  $unset  a la vez.
+          Vamos a actualizar un campo de un documento y a borrar un campo.
+            db.persona.updateOne({"_id": "5d501506306f70abce486401"}, {$set: {"name.first": "Luis"}, $unset: {"email": ""}}) 
+
+    --> UpdateOne  y  updateMany
+          updateOne
+            Sirve para realizar actualizacion de un solo campo de un documento, con este nos aseguramos que solo se va actualizar un solo campo y no por error 
+            se actualicen asi cumpla la Query (busqueda), se actualiza el primer documento que encuentre en la base de datos. 
+            db.persona.updateOne({"eyeColor": "green"}, {$set: {"salary": "450"}}) 
+          
+          updateMany
+            Actualiza todos los documentos que cumplen con la Query.
+                db.persona.updateMany({"eyeColor": "blue"},{$set: {"salary": 8800}}) 
+
+    -->  replaceOne
+            Este metodo nos sirve para remplazar un documento por otro nuevo documento. en el siguiente codigo se crea el documento con los parametros de name no mas.
+                 db.persona.replaceOne({"_id": "5d501506d49a13e3cd8c25c2"}, {"_id": "5d501506d49a13e3cd8c25c2", "name.first": "Luis", "name.last": "Guiza"})
+         
+    
+    --> Operador $rename
+            Nos permite cambiar el nombre de algun tipo de parametro de nuestra base de datos.
+            Ejemplo:  vamos a cambiar el parametro age por edad, en todos los documentos.
+                db.persona.updateMany({},{$rename: {"age": "edad"}}) 
+                db.persona.updateOne({"_id": "5d50150630f4f534c05f9e45"}, {$rename: {"edad": "age"}})      // actualiza solo un documento
+
+
+    -->  Fechas de base de datos.
+            Por lo general en os docuemntos se debe dejar la fecha en la que el docuemnto ha creado y tambien la fecha de la ultima actualizacion.
+              Ejemplo: introducir fecha a un documento en especifico.
+                db.persona.updateOne({"_id": "5d50150630f4f534c05f9e45"}, {$set: {"createAt": new Date(), "updateAt": new Date()}})
+    
+            Ejemplo: Para este ejemplo utilizaremos operador el operador $currentDate que funciona de la siguiente manera.
+                db.persona.updateOne({"_id": "5d501506306f70abce486401"}, {$currentDate: {"updateAt": true}})
+
+        Actualizar campo y que se actualice la fecha de actualizacion.
+            db.persona.updateOne({"_id": "5d50150630f4f534c05f9e45"}, {$set: {"salary": 5000}, $currentDate: {"updateAt": true}})
+
+    
+    --> Operador $push
+            En este ejemplo veremos como añadir un elemento en un array, en caso de que el elemento no exista lo crea con el elemento que lo hemos indicado.
+                db.persona.updateOne({"_id": "5d50150630f4f534c05f9e45"}, {$push: {"tags": "euro"}})
+
+            En este ejemplo se crea un array con el parametro euro si volvemos a ejecutar este comando quedarian dos parametros euro
+                db.persona.updateOne({"_id": "5d501506306f70abce486401"}, {$push: {"moneda": "euro"}})
+
+        Operador $push  con  $each
+            $each  = Sirve para ingresarmas mas de un valor a un array
+            db.persona.updateOne({"_id": "5d501506d49a13e3cd8c25c2"}, {$push: {"moneda": {$each: ["pesos", "dolar", "euros"] }}})
+ 
+    --> Operador $addToSet
+            sirve para insertar informacion en un array pero si el parametro que vamos a insertar ya esta no lo implementa
+            db.persona.updateOne({"_id": "5d501506d49a13e3cd8c25c2"}, {$addToSet: {"moneda": "dolar"}})
+
+    --> Operadores $pop
+            Este operador nos permite eliminar el ultimo elemento de un array o eliminar el primer elemento, si se le pone un +1 elimina elultimo elemento del array
+            si le ponemos un -1 elimina el primer elemento del array. Si no hay elementos no elimina nada.
+            db.persona.updateOne({"_id":"5d501506306f70abce486401", {$pop: {"moneda": 1}}})
+
+    --> Operador $pull
+            Elimina varias informacion de un array. Desde que cumpla con la Query.
+            db.persona.updateOne({"_id":"5d501506306f70abce486401"}, {$pull: {"range": {$gte: 5}}}) 
+
+    --> Operador $pullALL
+            Borra todos los elementos que se ele pasen, puede borrar varios o solo uno.
+            db.persona.updateOne({"_id":"5d501506306f70abce486401"}, {$pullAll: {"moneda": ["pesos", "ruquia"]}})
+
+    --> Operador posicional dentro de un array:  nombre_array.$
+            Nos permite cambiar un valor especifico dentro de un array por otro.
+            db.persona.updateOne({"_id":"5d501506306f70abce486401", "moneda": "euro"}, {$set: {"moneda.$": "EUR"}})
+
+    --> Operador posicional en Objetos dentro de un array.
+            En este ejercicio queremos cambiar la informacion de un objeto que esta dentro de un array.
+            db.persona.updateOne({"_id":"5d501506306f70abce486401", "friends.id": 1}, {$set: {"friends.$.name": "Laura torres"}})
+
+            Ahora en este mismo id, vamos añadir el campo email
+             db.persona.updateOne({"_id":"5d501506306f70abce486401", "friends.id": 1}, {$set: {"friends.$.email": "laura.torres@gmail.com"}})
+
+    --> Operador $elemMatch
+            Encuentra dentro de un array el elemento que corresponde y actualiza la informacion deseada. Se debe ingresar la informacion del objeto y enseguida
+            los datos a actualizar ,pueden ser todos o solo uno si se desea.  Funciona como una busqueda de informacion de un objeto que esta entro de un array y 
+            luego le pasamos los parametros a implementar o actualizar.
+             db.persona.updateOne({"_id":"5d501506306f70abce486401", "friends": {$elemMatch: {"name": "Laura torres", "email": "laura.torres@gmail.com"}}}, {$set: {"friends.$.edad": 33}})
+
+
+    --> Operador $inc
+            Sirve para incrementar la informacion de valor, puede incrementar en la cantidad deseada.
+            En este ejemplo le vamos a incrementra la edad a Laura torres que esta en un objeto dentro de un array.
+            db.persona.updateOne({"_id":"5d501506306f70abce486401", "friends": {$elemMatch: {"name": "Laura torres", "email": "laura.torres@gmail.com"}}}, {$inc: {"friends.$.edad": 2}})
+
+
+-->  Modelo de datos.
+
+    En nuestras nbase de datos podemos encontrar Datos embebidos  y datos normalizados.
+    
+        Datos embebidos
+            Son los documentos que no estan normalizados osea relacionados, se pueden ver como un documento con multiples objetos. La principal ventaja es que 
+            se pude leer mas informacion en un documento, por que toda la informacion esta en este documento. mucho mas rapido.
+
+        Datos normalizados
+            la informacion se organiza atraves de documentos. Se deben realizar mas querys para buscar la informacion. Es un poco mas lento pero la informacion 
+            queda mas organizada.
